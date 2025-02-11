@@ -1,0 +1,1 @@
+<!-- # Panel lateral con herramientas -->
