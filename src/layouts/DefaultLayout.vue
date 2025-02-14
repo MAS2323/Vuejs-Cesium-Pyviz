@@ -30,6 +30,7 @@
 
     <!-- Sección derecha -->
     <div class="navbar-right">
+      <router-link to="/">全球</router-link>
       <router-link to="/global">Global</router-link>
       <router-link to="/explorar">Herramientas</router-link>
       <router-link to="/analysis">Análisis</router-link>
