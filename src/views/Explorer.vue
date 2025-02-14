@@ -8,14 +8,11 @@
       <!-- Aquí puedes agregar más contenido, como botones, mapas, o elementos interactivos -->
     </div>
   </div>
-  <div>
-    <MapViewer />
-  </div>
+  <div></div>
 </template>
 
 <script setup>
 // Aquí puedes agregar cualquier lógica de Vue.js si es necesario
-import MapViewer from "@/components/MapViewer.vue";
 </script>
 
 <style scoped>

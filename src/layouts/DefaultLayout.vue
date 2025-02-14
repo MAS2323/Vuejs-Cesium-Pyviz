@@ -1,22 +1,30 @@
 <template>
   <header class="navbar">
+    <!-- Sección izquierda -->
     <div class="navbar-left">
       <button class="menu-btn">
         <i class="fas fa-bars"></i>
       </button>
-      <div class="logo">
-        <!-- <img src="/logo.png" alt="Logo" /> -->
-      </div>
+      <div class="logo"></div>
     </div>
-    <div class="search-bar">
-      <input type="text" placeholder="搜索位置" />
-      <button class="search-btn">
-        <i class="fas fa-search"></i>
+
+    <!-- Sección central (búsqueda) -->
+    <div class="search">
+      <input
+        ref="customSearchInput"
+        type="text"
+        placeholder="Buscar ubicación"
+        @keyup.enter="buscar"
+      />
+      <button class="search-btn" @click="buscar">
+        <i class="fas fa-search"></i> Buscar
       </button>
     </div>
+
+    <!-- Sección derecha -->
     <div class="navbar-right">
-      <router-link to="/global">全球</router-link>
-      <router-link to="/explorar">工具</router-link>
+      <router-link to="/global">Global</router-link>
+      <router-link to="/explorar">Herramientas</router-link>
       <button class="grid-btn">
         <i class="fas fa-th"></i>
       </button>
@@ -28,70 +36,93 @@
 </template>
 
 <script>
+import { ref, inject, onMounted } from "vue";
+
 export default {
   name: "DefaultLayout",
+  setup() {
+    const customSearchInput = ref(null); // Referencia al campo de búsqueda personalizado
+    const cesiumViewer = inject("cesiumViewer"); // Obtener el objeto viewer compartido
+
+    // Función para buscar ubicaciones
+    const buscar = () => {
+      if (customSearchInput.value && cesiumViewer.value) {
+        const query = customSearchInput.value.value.trim(); // Obtener el valor del campo personalizado
+        if (query) {
+          console.log("Buscando en Cesium:", query);
+
+          // Acceder al geocoder de Cesium
+          const geocoder = cesiumViewer.value.geocoder;
+          if (geocoder) {
+            // Simular la entrada de texto en el geocoder
+            geocoder.viewModel.searchText = query;
+            geocoder.viewModel.search();
+          } else {
+            console.error("No se encontró el geocoder de Cesium.");
+          }
+        } else {
+          console.warn("El campo de búsqueda está vacío.");
+        }
+      } else {
+        console.error(
+          "No se encontró el campo de búsqueda personalizado o el objeto viewer."
+        );
+      }
+    };
+
+    onMounted(() => {
+      // Verificar si el objeto viewer está disponible
+      if (cesiumViewer.value) {
+        console.log("Objeto viewer de Cesium encontrado:", cesiumViewer.value);
+      } else {
+        console.warn("No se encontró el objeto viewer de Cesium.");
+      }
+    });
+
+    return { customSearchInput, buscar };
+  },
 };
 </script>
 
 <style scoped>
+/* Estilo global para el encabezado */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #004d7a;
-  color: white;
-  padding: 10px 20px;
-  width: 100%;
+  padding: 0 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
   z-index: 1000;
 }
 
-.navbar-left,
-.navbar-right {
-  display: flex;
-  align-items: center;
+.search input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 250px;
+  transition: width 0.3s ease;
 }
 
-.menu-btn,
-.search-btn,
-.grid-btn,
-.profile-btn {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
-  margin: 0 10px;
-}
-
-.logo img {
-  height: 30px;
-}
-
-.search-bar {
-  display: flex;
-  background: #222;
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-.search-bar input {
-  border: none;
-  padding: 8px;
-  background: #222;
-  color: white;
+.search input:focus {
+  width: 300px;
+  border-color: #007bff;
   outline: none;
 }
 
-.navbar-right a {
+.search-btn {
+  background-color: #007bff;
   color: white;
-  text-decoration: none;
-  margin: 0 10px;
-}
-
-.content {
-  margin-top: 60px; /* Para evitar que el contenido quede detrás del navbar */
+  border: none;
+  padding: 8px 12px;
+  margin-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
 }
 </style>

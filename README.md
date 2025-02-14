@@ -62,6 +62,18 @@ npm install cesium
  "globals": {
     "Cesium": true
   }
-# vlvemos a instalar las en node pakage module npm 
-npm install 
+# vlvemos a instalar las en node pakage module npm
+npm install
 ```
+
+--- Integración de Cesium con Vue.js :
+--- Usa provide/inject para compartir el objeto viewer entre componentes.
+Configura correctamente los archivos estáticos de Cesium.
+Uso del Geocoder de Cesium :
+Habilita el geocoder al inicializar el Viewer.
+Usa la API del geocoder (viewModel.searchText y viewModel.search()) en lugar de manipular directamente el DOM.
+Depuración y Sincronización.
+
+--- Cesium 与 Vue.js 的集成：
+使用 provide/inject 在组件之间共享 viewer 对象。
+正确配置 Cesium 的静态文件。

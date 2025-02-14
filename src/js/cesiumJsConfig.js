@@ -19,7 +19,7 @@ const getViewer = {
   baseLayerPicker: true,
   scene3DOnly: true,
   fullScreenButton: true,
-  geocoder: false,
+  geocoder: true,
   timeline: true,
   vrButton: false,
   homeButton: false,
