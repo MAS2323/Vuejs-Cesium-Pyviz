@@ -1,13 +1,7 @@
 <template>
   <header class="navbar">
     <!-- Sección izquierda -->
-    <div class="navbar-left">
-      <button class="menu-btn">
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="logo"></div>
-    </div>
-
+    <div class="navbar-left"></div>
     <!-- Sección central (búsqueda) -->
     <div class="search">
       <input
@@ -20,17 +14,12 @@
         <i class="fas fa-search"></i> Buscar
       </button>
     </div>
-
     <!-- Sección derecha -->
     <div class="navbar-right">
+      <router-link to="/">Home</router-link>
       <router-link to="/global">Global</router-link>
       <router-link to="/explorar">Herramientas</router-link>
-      <button class="grid-btn">
-        <i class="fas fa-th"></i>
-      </button>
-      <button class="profile-btn">
-        <i class="fas fa-user-circle"></i>
-      </button>
+      <router-link to="/analysis">Análisis</router-link>
     </div>
   </header>
 </template>
@@ -46,11 +35,10 @@ export default {
 
     // Función para buscar ubicaciones
     const buscar = () => {
-      if (customSearchInput.value && cesiumViewer.value) {
+      if (customSearchInput.value && cesiumViewer?.value) {
         const query = customSearchInput.value.value.trim(); // Obtener el valor del campo personalizado
         if (query) {
           console.log("Buscando en Cesium:", query);
-
           // Acceder al geocoder de Cesium
           const geocoder = cesiumViewer.value.geocoder;
           if (geocoder) {
@@ -72,7 +60,7 @@ export default {
 
     onMounted(() => {
       // Verificar si el objeto viewer está disponible
-      if (cesiumViewer.value) {
+      if (cesiumViewer?.value) {
         console.log("Objeto viewer de Cesium encontrado:", cesiumViewer.value);
       } else {
         console.warn("No se encontró el objeto viewer de Cesium.");
@@ -91,7 +79,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  background-color: #ffffff;
+  background-color: #004d7a;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: fixed;
   top: 0;
@@ -99,7 +87,6 @@ export default {
   width: 100%;
   z-index: 1000;
 }
-
 .search input {
   padding: 8px 12px;
   border: 1px solid #ddd;
@@ -108,13 +95,11 @@ export default {
   width: 250px;
   transition: width 0.3s ease;
 }
-
 .search input:focus {
   width: 300px;
   border-color: #007bff;
   outline: none;
 }
-
 .search-btn {
   background-color: #007bff;
   color: white;

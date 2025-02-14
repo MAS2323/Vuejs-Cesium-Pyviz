@@ -2,13 +2,11 @@
   <div class="cesium-container">
     <!-- Contenedor del mapa de Cesium -->
     <div id="cesiumContainer" class="h-100 p-0 m-0"></div>
-    <DefaultLayout />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, provide } from "vue";
-import DefaultLayout from "@/layouts/DefaultLayout.vue";
+import { ref, onMounted, provide, onUnmounted } from "vue";
 import { getViewer } from "@/js/cesiumJsConfig.js";
 import {
   imageProviderUno,
@@ -41,26 +39,23 @@ onMounted(() => {
   // Configurar la línea de tiempo
   configureTimeline(viewer.value);
   viewer.value.timeline.makeLabel = DateTimeFormatter;
-
-  // Cargar la escena
-  loadScene();
 });
 
-async function loadScene() {
-  try {
-    const tileset = await Cesium.Cesium3DTileset.fromIonAssetId(43978);
-    tileset.maximumScreenSpaceError = 2;
-    const translation = new Cesium.Cartesian3(0, -5, 0);
-    tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
-    viewer.value.scene.primitives.add(tileset);
-    viewer.value.zoomTo(tileset);
-  } catch (error) {
-    alert(error);
+onUnmounted(() => {
+  if (viewer.value) {
+    // Destruye el mapa cuando se desmonta la página
+    viewer.value.destroy();
+    viewer.value = null; // Limpia la referencia
   }
-}
+});
 
-// Compartir el objeto viewer con otros componentes///
+// Compartir el objeto viewer con otros componentes
 provide("cesiumViewer", viewer);
 </script>
 
-<style scoped></style>
+<style scoped>
+.cesium-container {
+  width: 100%;
+  height: 100vh;
+}
+</style>
