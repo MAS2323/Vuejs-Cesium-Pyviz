@@ -1,12 +1,20 @@
-const createModel = (viewer, url, x, y, height) => {
-  const position = Cesium.Cartesian3.fromDegrees(x, y, height);
-  viewer.entities.add({
-    name: url,
-    position: position,
-    model: {
-      uri: url,
-    },
-  });
-};
+import * as Cesium from "cesium";
 
-export { createModel };
+/**
+ * Calcula la distancia entre dos puntos en metros.
+ * @param {Object} pointA - Primer punto con propiedades `longitude` y `latitude`.
+ * @param {Object} pointB - Segundo punto con propiedades `longitude` y `latitude`.
+ */
+export const calculateDistance = (pointA, pointB) => {
+  const cartesianA = Cesium.Cartesian3.fromDegrees(
+    pointA.longitude,
+    pointA.latitude
+  );
+  const cartesianB = Cesium.Cartesian3.fromDegrees(
+    pointB.longitude,
+    pointB.latitude
+  );
+
+  const distance = Cesium.Cartesian3.distance(cartesianA, cartesianB);
+  alert(`La distancia es: ${distance.toFixed(2)} metros`);
+};
