@@ -1,7 +1,7 @@
 <template>
   <div class="cesium-container">
     <!-- Contenedor del mapa de Cesium -->
-    <div id="cesiumContainer" class="h-100 p-0 m-0"></div>
+    <div id="cesiumContainer"></div>
 
     <!-- Panel de control -->
     <ControlPanel @start-measurement="startDistanceMeasurement" />
@@ -10,7 +10,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import ControlPanel from "@/components/ControlPanel.vue"; // Importar el panel de control
+import ControlPanel from "@/components/ControlPanel.vue"; 
 import {
   getViewer,
   imageProviderUno,
@@ -20,7 +20,7 @@ import {
   DateTimeFormatter,
 } from "@/js/cesiumJsConfig.js";
 
-// Definir viewer como una referencia reactiva
+// Definir viewer como una referencia reactiva  
 const viewer = ref(null);
 
 onMounted(() => {

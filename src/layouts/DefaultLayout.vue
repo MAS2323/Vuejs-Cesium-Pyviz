@@ -182,4 +182,8 @@ export default {
   background-color: white;
   border-radius: 5px;
 }
+.offcanvas {
+  background-color: #004d7a;
+  color: white;
+}
 </style>
